@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { auth } from 'firebase/app';
 
 import { Observable } from 'rxjs';
-
+export interface Item { name: string; }
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private userDataDoc: AngularFirestoreDocument<Item>;
   user: Observable<firebase.User>;
-  loggedIn: Boolean;
-  constructor(private firebaseAuth: AngularFireAuth) {
+  constructor(private firebaseAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.user = firebaseAuth.authState;
-    this.loggedIn = false;
+  }
+  update(item: Item) {
+    this.userDataDoc.update(item);
+  }
+  set(item: Item) {
+    this.userDataDoc.set(item);
   }
 
   signup(email: string, password: string) {
@@ -22,7 +28,13 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
         console.log('Success!', value);
-        this.loggedIn = true;
+        //create doc
+        var data = {
+          name: value.user.email,
+        }
+        this.userDataDoc = this.afs.doc<Item>('users/' + value.user.uid);
+        this.set(data)
+
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
@@ -30,7 +42,20 @@ export class AuthService {
   }
 
   loginWithGoogle() {
-    this.firebaseAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    this.firebaseAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
+      .then((result) => {
+        console.log(result);
+        if (result.additionalUserInfo.isNewUser) {
+          //create doc
+          var data = {
+            name: result.user.email,
+            firstname: result.additionalUserInfo.profile['given_name'],
+            lastname: result.additionalUserInfo.profile['family_name'],
+          }
+          this.userDataDoc = this.afs.doc<Item>('users/' + result.user.uid);
+          this.set(data)
+        }
+      });
   }
 
   login(email: string, password: string) {
@@ -39,7 +64,6 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then(value => {
         console.log('Nice, it worked!', value);
-        this.loggedIn = true;
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
@@ -50,7 +74,6 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signOut();
-    this.loggedIn = false;
   }
 
   isLoggedIn() {

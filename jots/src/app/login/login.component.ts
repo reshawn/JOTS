@@ -18,7 +18,11 @@ export class LoginComponent implements OnInit {
   // });
   // @Input() error: string | null;
   // @Output() submitEM = new EventEmitter();
-  constructor(public authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService) {
+    this.authService.user.subscribe((user: any) => {
+      console.log(user);
+    });
+  }
 
   ngOnInit() {
   }
