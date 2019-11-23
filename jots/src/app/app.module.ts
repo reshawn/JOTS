@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthService } from './core/auth.service';
+import { FormsModule } from '@angular/forms';
 
 import { environment } from '../environments/environment';
 export const firebaseConfig = environment.firebaseConfig;
