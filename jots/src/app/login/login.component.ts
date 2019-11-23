@@ -12,12 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
-  // form: FormGroup = new FormGroup({
-  //   username: new FormControl(''),
-  //   password: new FormControl(''),
-  // });
-  // @Input() error: string | null;
-  // @Output() submitEM = new EventEmitter();
+
   constructor(public authService: AuthService) {
     this.authService.user.subscribe((user: any) => {
       console.log(user);
@@ -45,13 +40,5 @@ export class LoginComponent implements OnInit {
     this.authService.logout();
   }
 
-
-  // submit() {
-  //   if (this.form.valid) {
-  //     this.submitEM.emit(this.form.value);
-  //   }
-
-
-  // }
 
 }

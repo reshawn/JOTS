@@ -1,5 +1,11 @@
-<div>
-    {{ (item | async)?.name }}
+<div *ngFor="let case of this.cases">
+    {{ case }}
+    <li *ngFor="let caseName of case | async">
+
+        {{ caseName }}
+
+    </li>
+
 </div>
 <mat-toolbar-row>
     <span>View my Cases</span>
