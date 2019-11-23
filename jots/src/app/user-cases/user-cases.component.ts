@@ -30,7 +30,7 @@ export class UserCasesComponent implements OnInit {
         console.log('cases', userDoc);
         for await (let cases of userDoc.cases) {
           console.log(cases);
-          this.cases.push(afs.doc<Item>('users/' + this.loggedInUserID + '/cases/' + cases).valueChanges());
+          this.cases.push(afs.doc<Item>('cases/' + cases).valueChanges());
         }
         console.log(this.cases);
         //const try = merge(this.cases.map( obj => obj))

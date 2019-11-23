@@ -1,10 +1,7 @@
 <div *ngFor="let case of this.cases">
-    {{ case }}
-    <li *ngFor="let caseName of case | async">
-
-        {{ caseName }}
-
-    </li>
+    <span *ngFor="let item of case | async | keyvalue">
+        {{item.key}} : {{item.value}}
+    </span>
 
 </div>
 <mat-toolbar-row>
