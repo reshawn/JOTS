@@ -23,6 +23,7 @@
             <button mat-raised-button (click)="signup()" [disabled]="!email || !password"> Signup</button>
         </mat-card-actions>
     </mat-card>
+    <a mat-raised-button [routerLink]="['/', 'viewCases']">View Cases</a>
 </div>
 
 <button (click)="logout()" *ngIf="authService.user | async">

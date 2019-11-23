@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   // });
   // @Input() error: string | null;
   // @Output() submitEM = new EventEmitter();
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -39,6 +40,7 @@ export class LoginComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
 
   // submit() {
   //   if (this.form.valid) {

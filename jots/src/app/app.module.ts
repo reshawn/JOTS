@@ -13,16 +13,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserCasesComponent } from './user-cases/user-cases.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
-    LoginComponent
+    LoginComponent,
+    UserCasesComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NoopAnimationsModule,
     AngularMaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [AuthService, AngularFireAuthGuard],
   bootstrap: [AppComponent],
