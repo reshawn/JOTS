@@ -1,29 +1,29 @@
 <h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.email }}!</h1>
 
+<div fxLayout="row" fxLayoutAlign="center center" *ngIf="!(authService.user | async)">
 
-<div *ngIf="!(authService.user | async)">
-    <input type="text" [(ngModel)]="email" placeholder="email">
-    <input type="password" [(ngModel)]="password" placeholder="password">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
 
-    <button (click)="signup()" [disabled]="!email || !password">
-        Signup
-    </button>
-
-    <button (click)="login()" [disabled]="!email || !password">
-        Login
-    </button>
-
-    <button (click)="googleSignUp()">
-        Google Sign In
-    </button>
+        <mat-card-content>
+            <mat-form-field>
+                <input matInput #input maxlength="10" placeholder="email" [(ngModel)]="email">
+            </mat-form-field>
+            <br>
+            <mat-form-field hintLabel="Max 10 characters">
+                <input matInput #input maxlength="10" placeholder="password" [(ngModel)]="password">
+                <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="googleSignUp()"> Google Sign In</button>
+            <button mat-raised-button color="accent" (click)="login()" [disabled]="!email || !password">Login</button>
+            <button mat-raised-button (click)="signup()" [disabled]="!email || !password"> Signup</button>
+        </mat-card-actions>
+    </mat-card>
 </div>
-
-
-<mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
 
 <button (click)="logout()" *ngIf="authService.user | async">
     Logout
