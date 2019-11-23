@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AuthService } from './core/auth.service';
+import { FormsModule } from '@angular/forms';
 
 import { environment } from '../environments/environment';
 export const firebaseConfig = environment.firebaseConfig;
@@ -28,7 +29,8 @@ import { AngularMaterialModule } from './angular-material.module';
     AngularFireAuthModule,
     AppRoutingModule,
     NoopAnimationsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    FormsModule
   ],
   providers: [AuthService,],
   bootstrap: [AppComponent],
