@@ -9,6 +9,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
@@ -17,9 +19,11 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule,
-    AppRoutingModule
+    // AngularFireModule.initializeApp(firebaseConfig),
+    // AngularFirestoreModule,
+    AppRoutingModule,
+    NoopAnimationsModule,
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
