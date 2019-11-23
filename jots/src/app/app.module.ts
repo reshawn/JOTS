@@ -7,6 +7,7 @@ export const firebaseConfig = environment.firebaseConfig;
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,8 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService,],
-  bootstrap: [AppComponent]
-
+  providers: [AuthService, AngularFireAuthGuard],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
