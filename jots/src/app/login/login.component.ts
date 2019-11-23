@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from '../core/auth.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card'
 
 @Component({
   selector: 'app-login',
@@ -9,7 +11,12 @@ import { AuthService } from '../core/auth.service';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
-
+  // form: FormGroup = new FormGroup({
+  //   username: new FormControl(''),
+  //   password: new FormControl(''),
+  // });
+  // @Input() error: string | null;
+  // @Output() submitEM = new EventEmitter();
   constructor(public authService: AuthService) { }
 
   ngOnInit() {
@@ -28,5 +35,13 @@ export class LoginComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
+  // submit() {
+  //   if (this.form.valid) {
+  //     this.submitEM.emit(this.form.value);
+  //   }
+
+
+  // }
 
 }

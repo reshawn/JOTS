@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthService } from './core/auth.service';
 
 import { environment } from '../environments/environment';
@@ -14,6 +14,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,12 @@ import { AngularMaterialModule } from './angular-material.module';
     AngularFireAuthModule,
     AppRoutingModule,
     NoopAnimationsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService,],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
+
 })
 export class AppModule { }
