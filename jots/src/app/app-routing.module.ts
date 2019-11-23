@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AngularFireAuthGuard, canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 
-const routes: Routes = [{ path: '', pathMatch: 'full', redirectTo: 'login' },
-{ path: 'login', component: LoginComponent }
+const routes: Routes = [{ path: '', pathMatch: 'full', redirectTo: 'profile' },
+{ path: 'login', component: LoginComponent },
+{ path: 'profile', component: ProfileComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   //,
   //{ path: 'register', component: RegisterComponent }
 ];
