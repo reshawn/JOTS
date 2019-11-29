@@ -17,6 +17,7 @@ import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform
 import { AngularMaterialModule } from './angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserCasesComponent } from './user-cases/user-cases.component';
+import { NewCaseComponent } from './new-case/new-case.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { UserCasesComponent } from './user-cases/user-cases.component';
     AppComponent,
     ProfileComponent,
     LoginComponent,
-    UserCasesComponent
+    UserCasesComponent,
+    NewCaseComponent
   ],
   imports: [
     BrowserModule,

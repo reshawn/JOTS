@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable, combineLatest, merge } from 'rxjs';
 import { AuthService } from '../core/auth.service';
@@ -19,7 +19,8 @@ export class UserCasesComponent implements OnInit {
   caseObject: Observable<Item>;
   cases: Observable<Item>[] = [];
   case: Observable<Item>;
-  constructor(private afs: AngularFirestore, public authService: AuthService) {
+  caseObjects: any[] = [];
+  constructor(private afs: AngularFirestore, public authService: AuthService, private cdr: ChangeDetectorRef) {
     this.authService.user.subscribe((user: any) => {
       console.log(user);
       this.loggedInUserID = user.uid;
@@ -29,39 +30,46 @@ export class UserCasesComponent implements OnInit {
       this.item.subscribe(async (userDoc: any) => {
         console.log('cases', userDoc);
         for await (let cases of userDoc.cases) {
-          console.log(cases);
-          this.cases.push(afs.doc<Item>('cases/' + cases).valueChanges());
+          // console.log(cases);
+          let docSnapshot = afs.doc<Item>('cases/' + cases).snapshotChanges();
+          docSnapshot.subscribe(data => {
+            this.caseObjects.push(data.payload.data());
+            console.log('paypay', data.payload.data());
+          })
+          console.log(this.caseObjects);
         }
-        console.log(this.cases);
-        //const try = merge(this.cases.map( obj => obj))
-        // combineLatest(this.cases.map(caseObj => caseObj)).subscribe(data => {
-        //   console.log('ahhhh', data);
-        // })
+
       })
     });
 
   }
 
-  // getTransactionsByIDs(caseIDs) {
-  //   return combineLatest(caseIDs.map(caseID => getTransactionByID(caseID)));
-  // }
-
   ngOnInit() {
 
+  }
+
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
   }
 
   step = 0;
 
   setStep(index: number) {
     this.step = index;
+    this.cdr.detectChanges();
   }
 
   nextStep() {
     this.step++;
+    this.cdr.detectChanges();
   }
 
   prevStep() {
     this.step--;
+    this.cdr.detectChanges();
+  }
+
+  ngOnDestroy() {
   }
 
 }

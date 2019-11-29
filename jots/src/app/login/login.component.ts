@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from '../core/auth.service';
+import { NewCaseComponent } from '../new-case/new-case.component';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card'
 import { Router } from '@angular/router';
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, private router: Router) {
     this.authService.user.subscribe((user: any) => {
       console.log(user);
     });
@@ -38,6 +39,10 @@ export class LoginComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  createNewCase(){
+    this.router.navigate(['/new-case']);
   }
 
 

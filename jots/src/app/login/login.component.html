@@ -1,4 +1,8 @@
+<div>
 <h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.email }}!</h1>
+<button *ngIf="authService.user | async" mat-raised-button color="warn" (click)="createNewCase()">Add New Case</button>
+<a *ngIf="authService.user | async" mat-raised-button [routerLink]="['/', 'viewCases']">View Cases</a>
+</div>
 
 <div fxLayout="row" fxLayoutAlign="center center" *ngIf="!(authService.user | async)">
 
@@ -21,9 +25,10 @@
             <button mat-raised-button color="primary" (click)="googleSignUp()"> Google Sign In</button>
             <button mat-raised-button color="accent" (click)="login()" [disabled]="!email || !password">Login</button>
             <button mat-raised-button (click)="signup()" [disabled]="!email || !password"> Signup</button>
+            <!-- <button mat-raised-button color="warn" (click)="createNewCase()">Add New Case</button> -->
         </mat-card-actions>
     </mat-card>
-    <a mat-raised-button [routerLink]="['/', 'viewCases']">View Cases</a>
+    
 </div>
 
 <button (click)="logout()" *ngIf="authService.user | async">
