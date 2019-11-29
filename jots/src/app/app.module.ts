@@ -19,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserCasesComponent } from './user-cases/user-cases.component';
 import { NewCaseComponent } from './new-case/new-case.component';
 
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +40,13 @@ import { NewCaseComponent } from './new-case/new-case.component';
     AngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      disableTimeOut: true,
+      tapToDismiss: false,
+      positionClass: 'toast-top-center',
+      enableHtml: true
+    })
   ],
   providers: [AuthService, AngularFireAuthGuard],
   bootstrap: [AppComponent],

@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthService } from './core/auth.service';
 import { Router } from '@angular/router';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { ToastrService } from 'ngx-toastr';
+
+export interface Item { }
 
 @Component({
   selector: 'app-root',
@@ -9,13 +13,42 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'jots';
-  // constructor(authService: AuthService, router: Router) {
-  //   console.log(authService.user);
-  //   if (!authService.loggedIn) {
-  //     router.navigate(['login']);
-  //   }
-  //   else {
-  //     router.navigate(['profile']);
-  //   }
-  // }
+  deadlineComing: Boolean = false;
+  constructor(private afs: AngularFirestore, public authService: AuthService, private toastr: ToastrService) {
+    var itemDoc, item, userCases = [], deadlinePassCases = [], deadlineComingcases = [];
+    this.authService.user.subscribe((user: any) => {
+      itemDoc = afs.doc<Item>('users/' + user.uid);
+      item = itemDoc.valueChanges();
+      item.subscribe(async (userDoc: any) => {
+        for await (let [index, cases] of userDoc.cases.entries()) {
+          let docSnapshot = afs.doc<Item>('cases/' + cases).snapshotChanges();
+          docSnapshot.subscribe(data => {
+            userCases.push(data.payload.data());
+            let deadline = data.payload.get('deadline');
+            var curr = Math.floor(new Date().getTime() / 1000);
+
+
+            if (deadline && curr > deadline.seconds) {
+              deadlinePassCases.push(data.payload.get('name'));
+            }
+            else if (deadline && (deadline.seconds - curr) < (60 * 60 * 24 * 3)) {
+              deadlineComingcases.push(data.payload.get('name'));
+            }
+
+
+            if (index == userDoc.cases.length - 1 && deadlinePassCases) { //at last case in array
+              // this.toastr.error("<ul><li>" + deadlinePassCases.join("</li><li>") + "</ul>", 'Deadline Passed!');
+              this.toastr.error(deadlinePassCases.join("<br/>"), 'Deadline Passed!');
+            }
+            if (index == userDoc.cases.length - 1 && deadlineComingcases) { //at last case in array
+              // this.toastr.warning("<ul><li>" + deadlineComingcases.join("</li><li>") + "</ul>", 'Deadline Passed!');
+              this.toastr.warning(deadlineComingcases.join("<br/>"), 'Deadline Coming!');
+            }
+
+
+          })
+        }
+      })
+    });
+  }
 }
