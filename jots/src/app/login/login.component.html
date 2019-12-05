@@ -1,8 +1,45 @@
-<div>
-<h1 *ngIf="authService.user | async">Welcome {{ (authService.user | async)?.email }}!</h1>
-<button *ngIf="authService.user | async" mat-raised-button color="warn" (click)="createNewCase()">Add New Case</button>
-<a *ngIf="authService.user | async" mat-raised-button [routerLink]="['/', 'viewCases']">View Cases</a>
-</div>
+<ng-container *ngIf="authService.user | async">
+
+    <div class="container">
+
+        <div class="card-profile" [ngStyle]="object">
+            <div class="card-profile_visual">
+            </div>
+
+            <div class="card-profile_user-infos">
+                <span class="infos_name">{{ (authService.user | async)?.displayName }}</span>
+                <span class="infos_nick">{{ (authService.user | async)?.email }}</span>
+
+                <a href="#"></a>
+            </div>
+
+            <div class="card-profile_user-stats">
+                <div class="stats-holder">
+                    <div class="user-stats">
+                        <strong>New</strong>
+                        <span><button *ngIf="authService.user | async" mat-raised-button color="warn"
+                                (click)="createNewCase()">Add New
+                                Case</button></span>
+                    </div>
+                    <div class="user-stats">
+                        <strong>View</strong>
+                        <span> <a *ngIf="authService.user | async" mat-raised-button
+                                [routerLink]="['/', 'viewCases']">View Cases</a></span>
+                    </div>
+                    <div class="user-stats">
+                        <strong>Leave</strong>
+                        <span><button mat-raised-button (click)="logout()" *ngIf="authService.user | async">
+                                Logout</button></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</ng-container>
 
 <div fxLayout="row" fxLayoutAlign="center center" *ngIf="!(authService.user | async)">
 
@@ -28,9 +65,5 @@
             <!-- <button mat-raised-button color="warn" (click)="createNewCase()">Add New Case</button> -->
         </mat-card-actions>
     </mat-card>
-    
-</div>
 
-<button (click)="logout()" *ngIf="authService.user | async">
-    Logout
-</button>
+</div>
