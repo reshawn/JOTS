@@ -15,11 +15,13 @@ import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
+import { MatDialogModule } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserCasesComponent } from './user-cases/user-cases.component';
 import { NewCaseComponent } from './new-case/new-case.component';
 
 import { ToastrModule } from 'ngx-toastr';
+import { LogsDialogComponent } from './logs-dialog/logs-dialog.component';
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { ToastrModule } from 'ngx-toastr';
     ProfileComponent,
     LoginComponent,
     UserCasesComponent,
-    NewCaseComponent
+    NewCaseComponent,
+    LogsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -44,11 +47,13 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({
       disableTimeOut: true,
       tapToDismiss: false,
-      positionClass: 'toast-top-center',
+      positionClass: 'toast-top-right',
       enableHtml: true
-    })
+    }),
+    MatDialogModule
   ],
   providers: [AuthService, AngularFireAuthGuard],
   bootstrap: [AppComponent],
+  entryComponents: [LogsDialogComponent]
 })
 export class AppModule { }

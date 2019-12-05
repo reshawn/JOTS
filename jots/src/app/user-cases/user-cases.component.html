@@ -22,6 +22,7 @@
                 <mat-panel-description>
                     {{case.deadline}}
                     <mat-icon>account_circle</mat-icon>
+                    <button mat-button (click)="openDialog(case.name)">View Change Log</button>
                 </mat-panel-description>
             </mat-expansion-panel-header>
 

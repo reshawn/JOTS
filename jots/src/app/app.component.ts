@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from './core/auth.service';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
+import { auth } from 'firebase';
 
 export interface Item { }
 
@@ -12,11 +13,16 @@ export interface Item { }
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'jots';
+  title = 'Justice On Time System';
   deadlineComing: Boolean = false;
-  constructor(private afs: AngularFirestore, public authService: AuthService, private toastr: ToastrService) {
+  isLoggedIn: Boolean = false;
+  constructor(private afs: AngularFirestore, public authService: AuthService, private toastr: ToastrService, private cdr: ChangeDetectorRef) {
     var itemDoc, item, userCases = [], deadlinePassCases = [], deadlineComingcases = [];
     this.authService.user.subscribe((user: any) => {
+      if (user.uid) {
+        this.isLoggedIn = true;
+        this.cdr.detectChanges();
+      }
       itemDoc = afs.doc<Item>('users/' + user.uid);
       item = itemDoc.valueChanges();
       item.subscribe(async (userDoc: any) => {
@@ -51,4 +57,14 @@ export class AppComponent {
       })
     });
   }
+
+  logout() {
+    this.authService.logout();
+    this.cdr.detectChanges();
+  }
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
+
+
 }

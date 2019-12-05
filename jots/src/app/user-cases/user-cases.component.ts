@@ -2,7 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable, combineLatest, merge } from 'rxjs';
 import { AuthService } from '../core/auth.service';
-
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { LogsDialogComponent } from '../logs-dialog/logs-dialog.component';
 
 export interface Item { name: string; }
 
@@ -20,27 +21,38 @@ export class UserCasesComponent implements OnInit {
   cases: Observable<Item>[] = [];
   case: Observable<Item>;
   caseObjects: any[] = [];
-  constructor(private afs: AngularFirestore, public authService: AuthService, private cdr: ChangeDetectorRef) {
+  constructor(private afs: AngularFirestore, public authService: AuthService, private cdr: ChangeDetectorRef, private dialog: MatDialog) {
     this.authService.user.subscribe((user: any) => {
-      console.log(user);
       this.loggedInUserID = user.uid;
       this.itemDoc = afs.doc<Item>('users/' + user.uid);
-      console.log('itemdoc', this.itemDoc);
       this.item = this.itemDoc.valueChanges();
       this.item.subscribe(async (userDoc: any) => {
-        console.log('cases', userDoc);
         for await (let cases of userDoc.cases) {
           // console.log(cases);
           let docSnapshot = afs.doc<Item>('cases/' + cases).snapshotChanges();
           docSnapshot.subscribe(data => {
             this.caseObjects.push(data.payload.data());
-            console.log('paypay', data.payload.data());
           })
-          console.log(this.caseObjects);
         }
 
       })
     });
+
+  }
+
+  openDialog(name: String) {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      id: 1,
+      title: name
+    };
+
+    this.dialog.open(LogsDialogComponent, dialogConfig);
 
   }
 
