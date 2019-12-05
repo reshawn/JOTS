@@ -13,8 +13,10 @@ export interface Item { name: string; }
 })
 export class UserCasesComponent implements OnInit {
 
+
   private itemDoc: AngularFirestoreDocument<Item>;
   loggedInUserID: any;
+  status: string;
   item: Observable<Item>;
   caseObject: Observable<Item>;
   cases: Observable<Item>[] = [];
@@ -71,5 +73,15 @@ export class UserCasesComponent implements OnInit {
 
   ngOnDestroy() {
   }
+
+  postpone() {
+    this.status = "Case postponed";
+  }
+
+  close(){
+    this.status = "Case closed";
+  }
+
+
 
 }
