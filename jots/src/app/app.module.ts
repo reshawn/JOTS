@@ -20,6 +20,7 @@ import { UserCasesComponent } from './user-cases/user-cases.component';
 import { NewCaseComponent } from './new-case/new-case.component';
 
 import { ToastrModule } from 'ngx-toastr';
+import { CaseResolveComponent } from './case-resolve/case-resolve.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ToastrModule } from 'ngx-toastr';
     ProfileComponent,
     LoginComponent,
     UserCasesComponent,
-    NewCaseComponent
+    NewCaseComponent,
+    CaseResolveComponent
   ],
   imports: [
     BrowserModule,

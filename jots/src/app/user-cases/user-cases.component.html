@@ -17,21 +17,32 @@
         <mat-expansion-panel [expanded]="step === i" (opened)="setStep(i)" hideToggle>
             <mat-expansion-panel-header>
                 <mat-panel-title>
+                    <span>
+                        <mat-icon>folder</mat-icon>
+                    </span>
                     {{case.name}}
                 </mat-panel-title>
                 <mat-panel-description>
-                    {{case.deadline}}
-                    <mat-icon>account_circle</mat-icon>
+                    {{case.deadline.toDate() | date: 'dd MMM hh:mm'}}
+
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <mat-form-field>
-                <input matInput placeholder="First name">
-            </mat-form-field>
-
-            <mat-form-field>
-                <input matInput type="number" min="1" placeholder="Age">
-            </mat-form-field>
+            <!-- <mat-list>
+                <h3 mat-subheader>Folders</h3>
+                <mat-list-item *ngFor="let folder of folders">
+                    <mat-icon mat-list-icon>folder</mat-icon>
+                    <h4 mat-line>{{folder.name}}</h4>
+                    <p mat-line> {{folder.updated | date}} </p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <h3 mat-subheader>Notes</h3>
+                <mat-list-item *ngFor="let note of notes">
+                    <mat-icon mat-list-icon>note</mat-icon>
+                    <h4 mat-line>{{note.name}}</h4>
+                    <p mat-line> {{note.updated | date}} </p>
+                </mat-list-item>
+            </mat-list> -->
 
             <mat-action-row>
                 <button mat-button color="warn" (click)="prevStep()">Previous</button>
