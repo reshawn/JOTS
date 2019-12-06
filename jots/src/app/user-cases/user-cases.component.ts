@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable, combineLatest, merge } from 'rxjs';
 import { AuthService } from '../core/auth.service';
+export interface Item { name: string; }
 
 
 export interface Item { name: string; }
@@ -12,17 +13,23 @@ export interface Item { name: string; }
   styleUrls: ['./user-cases.component.scss']
 })
 export class UserCasesComponent implements OnInit {
-
-
+  private resolveDataDoc: AngularFirestoreDocument<Item>;
   private itemDoc: AngularFirestoreDocument<Item>;
   loggedInUserID: any;
-  status: string;
+  casename: any;
+  casedeadline: any;
+  status: any;
+  business: any;
   item: Observable<Item>;
   caseObject: Observable<Item>;
   cases: Observable<Item>[] = [];
   case: Observable<Item>;
   caseObjects: any[] = [];
+  public fss: AngularFirestore;
+  // user: Observable<firebase.User>;
+
   constructor(private afs: AngularFirestore, public authService: AuthService, private cdr: ChangeDetectorRef) {
+
     this.authService.user.subscribe((user: any) => {
       console.log(user);
       this.loggedInUserID = user.uid;
@@ -74,13 +81,40 @@ export class UserCasesComponent implements OnInit {
   ngOnDestroy() {
   }
 
-  postpone() {
-    this.status = "Case postponed";
+  
+  update(item: Item) {
+    this.resolveDataDoc.update(item); //already predefined
+  }
+  
+  set(item: Item) {
+    this.resolveDataDoc.set(item); //already predefined
   }
 
-  close(){
-    this.status = "Case closed";
+
+  postpone() {
+    this.status = "Case postponed";
+
+    var changestat = this.afs.collection('cases').doc('p8vXi5QeZBOUrjjTWu0H');
+
+      var setWithMerge = changestat.set({
+        status: "Case postponed"
+      }, { merge: true });
   }
+
+
+  close(){
+      this.status = "Case closed";
+
+      var changestat = this.afs.collection('cases').doc('p8vXi5QeZBOUrjjTWu0H');
+
+      var setWithMerge = changestat.set({
+        status: "Case Closed"
+      }, { merge: true });
+
+    }
+    
+  
+
 
 
 

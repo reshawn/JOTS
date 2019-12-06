@@ -15,6 +15,7 @@ export class NewCaseComponent implements OnInit {
   casee: string;
   duedate: string;
   IDD: string;
+  status: string;
   // casse: object;
 
   constructor(private fss: AngularFirestore) { }
@@ -34,7 +35,8 @@ export class NewCaseComponent implements OnInit {
     console.log(this.casee);
     let c = {
       name: this.casee,
-      deadline: this.duedate
+      deadline: this.duedate,
+      status: "new"
     };
 
     this.IDD = this.fss.createId();
