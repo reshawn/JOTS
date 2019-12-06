@@ -16,7 +16,7 @@ export class AuthService {
 
   constructor(private firebaseAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.user = firebaseAuth.authState;
-    if (this.user) {
+    if (this.firebaseAuth.auth.currentUser !== null) {
       this.isUserLoggedIn.next(true);
     }
   }
