@@ -14,12 +14,13 @@ export interface Item { }
 })
 export class AppComponent {
   title = 'Justice On Time System';
-  deadlineComing: Boolean = false;
   isLoggedIn: Boolean = false;
   constructor(private afs: AngularFirestore, public authService: AuthService, private toastr: ToastrService, private cdr: ChangeDetectorRef) {
     var itemDoc, item, userCases = [], deadlinePassCases = [], deadlineComingcases = [];
     this.authService.user.subscribe((user: any) => {
-      if (user.uid) {
+      console.log('runshere')
+      if (!this.isLoggedIn && user.uid) {
+        console.log(user.uid, this.isLoggedIn);
         this.isLoggedIn = true;
         this.cdr.detectChanges();
       }
@@ -60,6 +61,7 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
+    this.isLoggedIn = false;
     this.cdr.detectChanges();
   }
   ngAfterViewInit() {
