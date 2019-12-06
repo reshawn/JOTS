@@ -1,7 +1,10 @@
 <h2 mat-dialog-title>{{title}}</h2>
 
 <mat-dialog-content>
-
-
-
+    <mat-list>
+        <mat-list-item *ngFor="let log of this.logs">
+            [{{log.date.toDate() | date: 'dd MMM hh:mm'}}] &nbsp;&nbsp;&nbsp;&nbsp;{{log.action}} by
+            &nbsp;<b>{{log.user}}</b>
+        </mat-list-item>
+    </mat-list>
 </mat-dialog-content>

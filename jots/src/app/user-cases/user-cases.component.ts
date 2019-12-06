@@ -33,7 +33,9 @@ export class UserCasesComponent implements OnInit {
           // console.log(cases);
           let docSnapshot = afs.doc<Item>('cases/' + cases).snapshotChanges();
           docSnapshot.subscribe(data => {
-            this.caseObjects.push(data.payload.data());
+            var c: any = data.payload.data();
+            c.id = data.payload.id;
+            this.caseObjects.push(c);
           })
         }
 
@@ -42,7 +44,7 @@ export class UserCasesComponent implements OnInit {
 
   }
 
-  openDialog(name: String) {
+  openDialog(name: String, id: String) {
 
     const dialogConfig = new MatDialogConfig();
 
@@ -50,7 +52,7 @@ export class UserCasesComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-      id: 1,
+      id: id,
       title: name
     };
 
@@ -90,7 +92,7 @@ export class UserCasesComponent implements OnInit {
     this.status = "Case postponed";
   }
 
-  close(){
+  close() {
     this.status = "Case closed";
   }
 

@@ -25,7 +25,7 @@
                 <mat-panel-description>
                     {{case.deadline.toDate() | date: 'dd MMM hh:mm'}}
 
-                    <button mat-button (click)="openDialog(case.name)">View Change Log</button>
+                    <button mat-button (click)="openDialog(case.name, case.id)">View Change Log</button>
 
                 </mat-panel-description>
             </mat-expansion-panel-header>

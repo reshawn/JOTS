@@ -7,13 +7,7 @@
         <a mat-button routerLink="new-case" routerLinkActive="active">Create Case</a>
         <a mat-button (click)="logout()" routerLink="login" routerLinkActive="active">Logout</a>
       </div>
-      <div class="lessons-list" *ngIf="isLoggedIn else loading">
-        ...
-      </div>
 
-      <ng-template #loading>
-        <div>Loading...</div>
-      </ng-template>
       <!-- <a mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register</a> -->
     </span>
   </mat-toolbar-row>

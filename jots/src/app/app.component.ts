@@ -43,11 +43,11 @@ export class AppComponent {
             }
 
 
-            if (index == userDoc.cases.length - 1 && deadlinePassCases) { //at last case in array
+            if (index == userDoc.cases.length - 1 && deadlinePassCases.length) { //at last case in array
               // this.toastr.error("<ul><li>" + deadlinePassCases.join("</li><li>") + "</ul>", 'Deadline Passed!');
               this.toastr.error(deadlinePassCases.join("<br/>"), 'Deadline Passed!');
             }
-            if (index == userDoc.cases.length - 1 && deadlineComingcases) { //at last case in array
+            if (index == userDoc.cases.length - 1 && deadlineComingcases.length) { //at last case in array
               // this.toastr.warning("<ul><li>" + deadlineComingcases.join("</li><li>") + "</ul>", 'Deadline Passed!');
               this.toastr.warning(deadlineComingcases.join("<br/>"), 'Deadline Coming!');
             }
