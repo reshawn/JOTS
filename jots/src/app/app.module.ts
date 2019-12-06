@@ -23,6 +23,7 @@ import { NewCaseComponent } from './new-case/new-case.component';
 import { ToastrModule } from 'ngx-toastr';
 import { LogsDialogComponent } from './logs-dialog/logs-dialog.component';
 import { CaseResolveComponent } from './case-resolve/case-resolve.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CaseResolveComponent } from './case-resolve/case-resolve.component';
     UserCasesComponent,
     NewCaseComponent,
     LogsDialogComponent,
-    CaseResolveComponent
+    CaseResolveComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
