@@ -14,16 +14,16 @@ export interface Item { }
 })
 export class AppComponent {
   title = 'Justice On Time System';
-  isLoggedIn: Boolean = false;
+  isLoggedIn: Boolean;
   constructor(private afs: AngularFirestore, public authService: AuthService, private toastr: ToastrService, private cdr: ChangeDetectorRef) {
     var itemDoc, item, userCases = [], deadlinePassCases = [], deadlineComingcases = [];
     this.authService.user.subscribe((user: any) => {
       console.log('runshere')
-      if (!this.isLoggedIn && user.uid) {
-        console.log(user.uid, this.isLoggedIn);
-        this.isLoggedIn = true;
-        this.cdr.detectChanges();
-      }
+      // if (!this.isLoggedIn && user.uid) {
+      //   console.log(user.uid, this.isLoggedIn);
+      //   this.cdr.detectChanges();
+      // }
+      this.cdr.detectChanges();
       itemDoc = afs.doc<Item>('users/' + user.uid);
       item = itemDoc.valueChanges();
       item.subscribe(async (userDoc: any) => {

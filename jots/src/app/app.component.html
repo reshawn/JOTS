@@ -1,18 +1,2 @@
-<mat-toolbar color="warn" class="app-header">
-  <mat-toolbar-row>
-    <span class="nav-tool-items">
-      <div *ngIf="!isLoggedIn"><a mat-button routerLink="login" routerLinkActive="active">Log in</a></div>
-      <div *ngIf="isLoggedIn">
-        <a mat-button routerLink="viewCases" routerLinkActive="active">Cases</a>
-        <a mat-button routerLink="new-case" routerLinkActive="active">Create Case</a>
-        <a mat-button (click)="logout()" routerLink="login" routerLinkActive="active">Logout</a>
-      </div>
-
-      <!-- <a mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register</a> -->
-    </span>
-  </mat-toolbar-row>
-
-
-</mat-toolbar>
-
+<app-navbar></app-navbar>
 <router-outlet></router-outlet>
