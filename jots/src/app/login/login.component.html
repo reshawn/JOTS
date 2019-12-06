@@ -41,7 +41,7 @@
 
 </ng-container>
 
-<div fxLayout="row" fxLayoutAlign="center center" *ngIf="!(authService.user | async)">
+<div *ngIf="!(authService.user | async)">
 
     <mat-card class="example-card">
         <mat-card-header>
