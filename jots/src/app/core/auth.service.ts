@@ -38,7 +38,8 @@ export class AuthService {
           name: value.user.email,
         }
         this.userDataDoc = this.afs.doc<Item>('users/' + value.user.uid);
-        this.set(data)
+        this.set(data);
+        this.isUserLoggedIn.next(true);
 
       })
       .catch(err => {
@@ -70,6 +71,7 @@ export class AuthService {
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
+        this.isUserLoggedIn.next(true);
         console.log('Nice, it worked!', value);
       })
       .catch(err => {
