@@ -25,9 +25,11 @@ export class UserCasesComponent implements OnInit {
   cases: Observable<Item>[] = [];
   case: Observable<Item>;
   caseObjects: any[] = [];
+  username: string;
   constructor(private afs: AngularFirestore, public authService: AuthService, private cdr: ChangeDetectorRef, private dialog: MatDialog) {
     this.authService.user.subscribe((user: any) => {
       this.loggedInUserID = user.uid;
+      this.username = user.displayName;
       this.itemDoc = afs.doc<Item>('users/' + user.uid);
       this.item = this.itemDoc.valueChanges();
       this.item.subscribe(async (userDoc: any) => {
@@ -90,36 +92,52 @@ export class UserCasesComponent implements OnInit {
   ngOnDestroy() {
   }
 
-  
+
   update(item: Item) {
     this.resolveDataDoc.update(item); //already predefined
   }
-  
+
   set(item: Item) {
     this.resolveDataDoc.set(item); //already predefined
   }
 
 
-  postpone() {
+  postpone(id: string) {
     this.status = "Case postponed";
 
-    var changestat = this.afs.collection('cases').doc('p8vXi5QeZBOUrjjTWu0H');
+    var changestat = this.afs.collection('cases').doc(id);
 
-      var setWithMerge = changestat.set({
-        status: "Case postponed"
-      }, { merge: true });
+    var setWithMerge = changestat.set({
+      status: "Case postponed"
+    }, { merge: true });
+
+    let logCol = this.afs.collection('cases/' + id + '/log/');
+    let l = {
+      action: 'Updated to "Postponed"',
+      date: new Date(),
+      user: this.username
+    };
+    logCol.add(l);
   }
 
 
-  close(){
-      this.status = "Case closed";
+  close(id: string) {
+    this.status = "Case closed";
 
-      var changestat = this.afs.collection('cases').doc('p8vXi5QeZBOUrjjTWu0H');
+    var changestat = this.afs.collection('cases').doc(id);
 
-      var setWithMerge = changestat.set({
-        status: "Case Closed"
-      }, { merge: true });
+    var setWithMerge = changestat.set({
+      status: "Case Closed"
+    }, { merge: true });
 
-    }
-    
+    let logCol = this.afs.collection('cases/' + id + '/log/');
+    let l = {
+      action: 'Updated to "Closed"',
+      date: new Date(),
+      user: this.username
+    };
+    logCol.add(l);
+
+  }
+
 }

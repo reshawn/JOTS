@@ -50,6 +50,7 @@ export class NewCaseComponent implements OnInit {
     this.IDD = this.fss.createId();
     this.caseDataDoc = this.fss.doc<Item>('cases/' + this.IDD);
     this.set(c)
+
     let logCol = this.fss.collection('cases/' + this.IDD + '/log/');
     let l = {
       action: 'Created',
