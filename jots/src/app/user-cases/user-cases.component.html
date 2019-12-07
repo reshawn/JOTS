@@ -49,8 +49,8 @@
             <mat-action-row>
                 <button mat-button color="warn" (click)="prevStep()">Previous</button>
                 <button mat-button color="primary" (click)="nextStep()">Next</button>
-                <button mat-button color="primary" (click)="postpone()">Postpone</button>
-                <button mat-button color="primary" (click)="close()">Close</button>
+                <button mat-button color="primary" (click)="postpone(case.id)">Postpone</button>
+                <button mat-button color="primary" (click)="close(case.id)">Close</button>
                 <input matInput #input maxlength="50" placeholder=" {{case.status}}" [(ngModel)]="status">
             </mat-action-row>
         </mat-expansion-panel>
