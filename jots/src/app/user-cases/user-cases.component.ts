@@ -113,9 +113,4 @@ export class UserCasesComponent implements OnInit {
 
     }
     
-  
-
-
-
-
 }
