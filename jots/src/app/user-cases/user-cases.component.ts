@@ -90,36 +90,36 @@ export class UserCasesComponent implements OnInit {
   ngOnDestroy() {
   }
 
-  
+
   update(item: Item) {
     this.resolveDataDoc.update(item); //already predefined
   }
-  
+
   set(item: Item) {
     this.resolveDataDoc.set(item); //already predefined
   }
 
 
-  postpone() {
+  postpone(id: string) {
     this.status = "Case postponed";
 
-    var changestat = this.afs.collection('cases').doc('p8vXi5QeZBOUrjjTWu0H');
+    var changestat = this.afs.collection('cases').doc(id);
 
-      var setWithMerge = changestat.set({
-        status: "Case postponed"
-      }, { merge: true });
+    var setWithMerge = changestat.set({
+      status: "Case postponed"
+    }, { merge: true });
   }
 
 
-  close(){
-      this.status = "Case closed";
+  close(id: string) {
+    this.status = "Case closed";
 
-      var changestat = this.afs.collection('cases').doc('p8vXi5QeZBOUrjjTWu0H');
+    var changestat = this.afs.collection('cases').doc(id);
 
-      var setWithMerge = changestat.set({
-        status: "Case Closed"
-      }, { merge: true });
+    var setWithMerge = changestat.set({
+      status: "Case Closed"
+    }, { merge: true });
 
-    }
-    
+  }
+
 }
