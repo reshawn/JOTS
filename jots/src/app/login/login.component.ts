@@ -13,10 +13,17 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
+  profilepic: string;
+  private object: Object = null;
 
   constructor(public authService: AuthService, private router: Router) {
     this.authService.user.subscribe((user: any) => {
       console.log(user);
+      this.profilepic = user.photoURL;
+      console.log('background-image: url( ' + user.photoURL + ')');
+      this.object = {
+        'background-image': 'url(' + this.profilepic + ')'
+      }
     });
   }
 
@@ -41,9 +48,8 @@ export class LoginComponent implements OnInit {
     this.authService.logout();
   }
 
-  createNewCase(){
+  createNewCase() {
     this.router.navigate(['/new-case']);
   }
-
 
 }

@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import * as firebase from 'firebase/app';
 import { auth } from 'firebase/app';
 
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 export interface Item { name: string; }
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,13 @@ export interface Item { name: string; }
 export class AuthService {
   private userDataDoc: AngularFirestoreDocument<Item>;
   user: Observable<firebase.User>;
+  public isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(private firebaseAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.user = firebaseAuth.authState;
+    if (this.firebaseAuth.auth.currentUser !== null) {
+      this.isUserLoggedIn.next(true);
+    }
   }
   update(item: Item) {
     this.userDataDoc.update(item);
@@ -33,7 +38,8 @@ export class AuthService {
           name: value.user.email,
         }
         this.userDataDoc = this.afs.doc<Item>('users/' + value.user.uid);
-        this.set(data)
+        this.set(data);
+        this.isUserLoggedIn.next(true);
 
       })
       .catch(err => {
@@ -45,6 +51,7 @@ export class AuthService {
     this.firebaseAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
       .then((result) => {
         console.log(result);
+        this.isUserLoggedIn.next(true);
         if (result.additionalUserInfo.isNewUser) {
           //create doc
           var data = {
@@ -54,6 +61,7 @@ export class AuthService {
           }
           this.userDataDoc = this.afs.doc<Item>('users/' + result.user.uid);
           this.set(data)
+          this.isUserLoggedIn.next(true);
         }
       });
   }
@@ -63,6 +71,7 @@ export class AuthService {
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
+        this.isUserLoggedIn.next(true);
         console.log('Nice, it worked!', value);
       })
       .catch(err => {
@@ -74,9 +83,14 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signOut();
+    this.isUserLoggedIn.next(false);
   }
 
   isLoggedIn() {
 
+  }
+
+  getLoginState() {
+    return this.isUserLoggedIn.asObservable();
   }
 }

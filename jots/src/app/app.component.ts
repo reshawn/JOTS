@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from './core/auth.service';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
+import { auth } from 'firebase';
 
 export interface Item { }
 
@@ -12,11 +13,17 @@ export interface Item { }
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'jots';
-  deadlineComing: Boolean = false;
-  constructor(private afs: AngularFirestore, public authService: AuthService, private toastr: ToastrService) {
+  title = 'Justice On Time System';
+  isLoggedIn: Boolean;
+  constructor(private afs: AngularFirestore, public authService: AuthService, private toastr: ToastrService, private cdr: ChangeDetectorRef) {
     var itemDoc, item, userCases = [], deadlinePassCases = [], deadlineComingcases = [];
     this.authService.user.subscribe((user: any) => {
+      console.log('runshere')
+      // if (!this.isLoggedIn && user.uid) {
+      //   console.log(user.uid, this.isLoggedIn);
+      //   this.cdr.detectChanges();
+      // }
+      this.cdr.detectChanges();
       itemDoc = afs.doc<Item>('users/' + user.uid);
       item = itemDoc.valueChanges();
       item.subscribe(async (userDoc: any) => {
@@ -36,11 +43,11 @@ export class AppComponent {
             }
 
 
-            if (index == userDoc.cases.length - 1 && deadlinePassCases) { //at last case in array
+            if (index == userDoc.cases.length - 1 && deadlinePassCases.length) { //at last case in array
               // this.toastr.error("<ul><li>" + deadlinePassCases.join("</li><li>") + "</ul>", 'Deadline Passed!');
               this.toastr.error(deadlinePassCases.join("<br/>"), 'Deadline Passed!');
             }
-            if (index == userDoc.cases.length - 1 && deadlineComingcases) { //at last case in array
+            if (index == userDoc.cases.length - 1 && deadlineComingcases.length) { //at last case in array
               // this.toastr.warning("<ul><li>" + deadlineComingcases.join("</li><li>") + "</ul>", 'Deadline Passed!');
               this.toastr.warning(deadlineComingcases.join("<br/>"), 'Deadline Coming!');
             }
@@ -51,4 +58,15 @@ export class AppComponent {
       })
     });
   }
+
+  logout() {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    this.cdr.detectChanges();
+  }
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
+
+
 }

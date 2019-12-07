@@ -11,26 +11,31 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProfileComponent } from './profile/profile.component';
+// import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
+import { MatDialogModule } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserCasesComponent } from './user-cases/user-cases.component';
 import { NewCaseComponent } from './new-case/new-case.component';
 
 import { ToastrModule } from 'ngx-toastr';
+import { LogsDialogComponent } from './logs-dialog/logs-dialog.component';
 import { CaseResolveComponent } from './case-resolve/case-resolve.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileComponent,
+    // ProfileComponent,
     LoginComponent,
     UserCasesComponent,
     NewCaseComponent,
-    CaseResolveComponent
+    LogsDialogComponent,
+    CaseResolveComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -46,11 +51,13 @@ import { CaseResolveComponent } from './case-resolve/case-resolve.component';
     ToastrModule.forRoot({
       disableTimeOut: true,
       tapToDismiss: false,
-      positionClass: 'toast-top-center',
+      positionClass: 'toast-top-right',
       enableHtml: true
-    })
+    }),
+    MatDialogModule
   ],
   providers: [AuthService, AngularFireAuthGuard],
   bootstrap: [AppComponent],
+  entryComponents: [LogsDialogComponent]
 })
 export class AppModule { }
