@@ -25,9 +25,11 @@ export class UserCasesComponent implements OnInit {
   cases: Observable<Item>[] = [];
   case: Observable<Item>;
   caseObjects: any[] = [];
+  username: string;
   constructor(private afs: AngularFirestore, public authService: AuthService, private cdr: ChangeDetectorRef, private dialog: MatDialog) {
     this.authService.user.subscribe((user: any) => {
       this.loggedInUserID = user.uid;
+      this.username = user.displayName;
       this.itemDoc = afs.doc<Item>('users/' + user.uid);
       this.item = this.itemDoc.valueChanges();
       this.item.subscribe(async (userDoc: any) => {
@@ -108,6 +110,14 @@ export class UserCasesComponent implements OnInit {
     var setWithMerge = changestat.set({
       status: "Case postponed"
     }, { merge: true });
+
+    let logCol = this.afs.collection('cases/' + id + '/log/');
+    let l = {
+      action: 'Updated to "Postponed"',
+      date: new Date(),
+      user: this.username
+    };
+    logCol.add(l);
   }
 
 
@@ -119,6 +129,14 @@ export class UserCasesComponent implements OnInit {
     var setWithMerge = changestat.set({
       status: "Case Closed"
     }, { merge: true });
+
+    let logCol = this.afs.collection('cases/' + id + '/log/');
+    let l = {
+      action: 'Updated to "Closed"',
+      date: new Date(),
+      user: this.username
+    };
+    logCol.add(l);
 
   }
 
