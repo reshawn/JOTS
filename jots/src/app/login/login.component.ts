@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   profilepic: string;
-  private object: Object = null;
+  object: Object = null;
 
   constructor(public authService: AuthService, private router: Router) {
     this.authService.user.subscribe((user: any) => {

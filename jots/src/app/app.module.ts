@@ -50,7 +50,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       disableTimeOut: true,
-      tapToDismiss: false,
+      tapToDismiss: true,
       positionClass: 'toast-top-right',
       enableHtml: true
     }),

@@ -7,3 +7,4 @@ db.sqlite3
 media
 env
 .env
+jots/src/environments/environment.prod.ts

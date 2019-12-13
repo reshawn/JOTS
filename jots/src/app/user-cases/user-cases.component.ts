@@ -23,7 +23,7 @@ export class UserCasesComponent implements OnInit {
   item: Observable<Item>;
   caseObject: Observable<Item>;
   cases: Observable<Item>[] = [];
-  case: Observable<Item>;
+  case: Observable<any>;
   caseObjects: any[] = [];
   username: string;
   constructor(private afs: AngularFirestore, public authService: AuthService, private cdr: ChangeDetectorRef, private dialog: MatDialog) {
